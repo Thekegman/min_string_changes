@@ -1,6 +1,6 @@
 from collections import deque
 from itertools import chain
-
+from timeit import Timer
 
 def expand(word):
         new_nodes = []
@@ -15,7 +15,8 @@ def expand(word):
             new_nodes.append([word[:size]+goal_word[size]+word[size:]])
         return chain.from_iterable(new_nodes)
 
-def search():
+
+def old_search():
     search_queue = deque([init_word])
     count = 0
     changes_count = 0
@@ -37,8 +38,23 @@ def search():
             size_of_next_layer += expantion_size
             
         count += 1
+        
+def search():
+    layer = [init_word]
+    changes_count = 0
+    while True:
+        for word in layer:
+            if word == goal_word:
+                return changes_count
+        
+        layer = tuple(chain.from_iterable([expand(x)for x in layer]))
+        changes_count += 1
+        print(changes_count)
 
+        
 if __name__ == '__main__':
-    init_word = input("initial word: ").strip()
-    goal_word = input("target word: ").strip()
-    print(search())
+    init_word ="sunday, monday"
+    goal_word = "saturday, friday"
+    search()
+
+
