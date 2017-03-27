@@ -1,7 +1,6 @@
 from collections import deque
 from itertools import chain
-init_word = input("initial word: ").strip()
-goal_word = input("target word: ").strip()
+
 
 def expand(word):
         new_nodes = []
@@ -38,4 +37,8 @@ def search():
             size_of_next_layer += expantion_size
             
         count += 1
-print(search())
+
+if __name__ == '__main__':
+    init_word = input("initial word: ").strip()
+    goal_word = input("target word: ").strip()
+    print(search())
