@@ -41,20 +41,24 @@ def old_search():
         
 def search():
     layer = [init_word]
+    seen = set()
     changes_count = 0
     while True:
+        next_layer = []
         for word in layer:
             if word == goal_word:
                 return changes_count
-        
-        layer = tuple(chain.from_iterable([expand(x)for x in layer]))
+            seen.add(word)
+            next_layer.append(expand(word))
+        layer = (i for i in chain.from_iterable(next_layer) if i not in seen)  
         changes_count += 1
         print(changes_count)
+
 
         
 if __name__ == '__main__':
     init_word ="sunday, monday"
-    goal_word = "saturday, friday"
+    goal_word = "saturnday, friday"
     search()
 
 
